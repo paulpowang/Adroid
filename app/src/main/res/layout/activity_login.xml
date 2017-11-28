@@ -13,10 +13,10 @@
         android:id="@+id/textView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="ID/Gmail:" />
+        android:text="ID/Email:" />
 
     <EditText
-        android:id="@+id/login_txt_gmail"
+        android:id="@+id/login_txt_email"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
@@ -48,4 +48,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="New User Register" />
+
+    <com.google.android.gms.common.SignInButton
+        android:id="@+id/login_btn_G_sign_in"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_gravity="center"
+        android:visibility="visible" />
+
+
 </LinearLayout>
