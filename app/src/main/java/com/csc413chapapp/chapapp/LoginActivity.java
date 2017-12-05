@@ -5,8 +5,12 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
+import android.text.method.HideReturnsTransformationMethod;
+import android.text.method.PasswordTransformationMethod;
 import android.util.Log;
 import android.view.View;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -25,6 +29,10 @@ public class LoginActivity extends AppCompatActivity {
     FirebaseAuth auth;
     FirebaseAuth.AuthStateListener authStateListener;
     private String userUID;
+
+    //check pw chechbox
+    private EditText pwInput;
+    private CheckBox box;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +54,25 @@ public class LoginActivity extends AppCompatActivity {
                 }
             }
         };
+
+
+        //display pw check box function
+        box = (CheckBox) findViewById(R.id.box_pw);
+        pwInput = (EditText) findViewById(R.id.login_txt_pw);
+        box.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
+                if(isChecked){
+                    //display password
+                    pwInput.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+                }else{
+                    //hide password
+                    pwInput.setTransformationMethod(PasswordTransformationMethod.getInstance());
+                }
+                //Keep the cursor at the end of the text
+                pwInput.setSelection(pwInput.getText().length());
+            }
+        });
 
     }
 
