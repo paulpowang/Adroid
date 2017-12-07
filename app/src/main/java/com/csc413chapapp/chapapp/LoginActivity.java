@@ -26,6 +26,7 @@ import com.google.firebase.auth.FirebaseUser;
 
 public class LoginActivity extends AppCompatActivity {
 
+    //Firebase Auth
     FirebaseAuth auth;
     FirebaseAuth.AuthStateListener authStateListener;
     private String userUID;
