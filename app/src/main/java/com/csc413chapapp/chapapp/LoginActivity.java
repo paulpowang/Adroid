@@ -45,11 +45,10 @@ public class LoginActivity extends AppCompatActivity {
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 //get User
                 FirebaseUser user = firebaseAuth.getCurrentUser();
-                if (user!=null){
-                    Log.d("onAuthStateChange", "Login: "+ user.getUid());
+                if (user != null) {
+                    Log.d("onAuthStateChange", "Login: " + user.getUid());
                     userUID = user.getUid();
-                }
-                else{
+                } else {
                     Log.d("onAuthStateChange", "Logout");
                 }
             }
@@ -62,10 +61,10 @@ public class LoginActivity extends AppCompatActivity {
         box.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
-                if(isChecked){
+                if (isChecked) {
                     //display password
                     pwInput.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
-                }else{
+                } else {
                     //hide password
                     pwInput.setTransformationMethod(PasswordTransformationMethod.getInstance());
                 }
@@ -73,51 +72,44 @@ public class LoginActivity extends AppCompatActivity {
                 pwInput.setSelection(pwInput.getText().length());
             }
         });
-
     }
 
-
     @Override
-    protected  void onStart(){
+    protected void onStart() {
         super.onStart();
         auth.addAuthStateListener(authStateListener);
     }
+
     @Override
-    protected  void onStop(){
+    protected void onStop() {
         super.onStop();
         auth.removeAuthStateListener(authStateListener);
     }
 
-    public void login(View v){
-        String email = ((EditText)findViewById(R.id.login_txt_email)).getText().toString();
-        String password = ((EditText)findViewById(R.id.login_txt_pw)).getText().toString();
-        Log.d("login method", email+"/"+password);
+    public void login(View v) {
+        String email = ((EditText) findViewById(R.id.login_txt_email)).getText().toString();
+        String password = ((EditText) findViewById(R.id.login_txt_pw)).getText().toString();
+        Log.d("login method", email + "/" + password);
         auth.signInWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
-                if(task.isSuccessful()){
+                if (task.isSuccessful()) {
 
-                    //Toast.makeText(getApplicationContext(), "Login Fail", Toast.LENGTH_LONG);
                     Intent i = new Intent(LoginActivity.this, AfterLoginActivity.class);
                     LoginActivity.this.startActivity(i);
 
-
-                }else{
-                    Intent i = new Intent(LoginActivity.this, RegisterActivity.class);
-                    LoginActivity.this.startActivity(i);
+                } else {
+                    //make Toast message when input username or password invalid
+                    Toast.makeText(LoginActivity.this, "invalid user or password", Toast.LENGTH_SHORT).show();
                 }
-
             }
         });
 
     }//end of login method
 
-    public void register(View v){
+    public void toRegister(View v) {
 
         Intent i = new Intent(this, RegisterActivity.class);
         this.startActivity(i);
-
     }
-
-
 }//end of main class
