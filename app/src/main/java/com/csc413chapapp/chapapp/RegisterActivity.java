@@ -2,8 +2,12 @@ package com.csc413chapapp.chapapp;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.text.method.HideReturnsTransformationMethod;
+import android.text.method.PasswordTransformationMethod;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 
 import com.google.firebase.*;
@@ -18,6 +22,7 @@ public class RegisterActivity extends AppCompatActivity{
     private Button submitBttn;
     private EditText txt_email;
     private EditText txt_password;
+    private CheckBox box;
 
     private FirebaseAuth mAuth;
 
@@ -44,6 +49,25 @@ public class RegisterActivity extends AppCompatActivity{
 
             }
 
+        });
+
+        //following code is copied and pasted from paul
+        //display pw check box function
+        box = (CheckBox) findViewById(R.id.reg_box_pw);
+        txt_password = (EditText) findViewById(R.id.reg_txt_pw);
+        box.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
+                if (isChecked) {
+                    //display password
+                    txt_password.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+                } else {
+                    //hide password
+                    txt_password.setTransformationMethod(PasswordTransformationMethod.getInstance());
+                }
+                //Keep the cursor at the end of the text
+                txt_password.setSelection(txt_password.getText().length());
+            }
         });
 
     }
