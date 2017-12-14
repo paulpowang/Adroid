@@ -9,7 +9,6 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import com.google.firebase.*;
 import com.google.firebase.auth.FirebaseAuth;
@@ -23,9 +22,6 @@ public class RegisterActivity extends AppCompatActivity{
     private Button submitBttn;
     private EditText txt_email;
     private EditText txt_password;
-
-    //check pw chechbox
-    private EditText pwInput;
     private CheckBox box;
 
     private FirebaseAuth mAuth;
@@ -51,28 +47,26 @@ public class RegisterActivity extends AppCompatActivity{
 
                 mAuth.createUserWithEmailAndPassword(email, password);
 
-                //make Toast message when input username or password invalid
-                Toast.makeText(RegisterActivity.this, "Register Success, Please Return to Login Page to Login", Toast.LENGTH_LONG).show();
-
             }
 
         });
 
+        //following code is copied and pasted from paul
         //display pw check box function
         box = (CheckBox) findViewById(R.id.reg_box_pw);
-        pwInput = (EditText) findViewById(R.id.reg_txt_pw);
+        txt_password = (EditText) findViewById(R.id.reg_txt_pw);
         box.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
                 if (isChecked) {
                     //display password
-                    pwInput.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+                    txt_password.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
                 } else {
                     //hide password
-                    pwInput.setTransformationMethod(PasswordTransformationMethod.getInstance());
+                    txt_password.setTransformationMethod(PasswordTransformationMethod.getInstance());
                 }
                 //Keep the cursor at the end of the text
-                pwInput.setSelection(pwInput.getText().length());
+                txt_password.setSelection(txt_password.getText().length());
             }
         });
 
