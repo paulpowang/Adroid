@@ -9,6 +9,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.google.firebase.*;
 import com.google.firebase.auth.FirebaseAuth;
@@ -46,6 +47,9 @@ public class RegisterActivity extends AppCompatActivity{
                 password = txt_password.getText().toString().trim();
 
                 mAuth.createUserWithEmailAndPassword(email, password);
+
+                //make Toast message when input username or password invalid
+                Toast.makeText(RegisterActivity.this, "Register Success", Toast.LENGTH_SHORT).show();
 
             }
 
