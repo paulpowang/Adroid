@@ -118,7 +118,4 @@ public class LoginActivity extends AppCompatActivity {
 
 
 
-
-
-
 }//end of Login Activity

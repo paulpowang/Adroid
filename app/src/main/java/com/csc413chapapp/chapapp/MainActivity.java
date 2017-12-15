@@ -28,133 +28,61 @@ import com.google.firebase.database.FirebaseDatabase;
 
 public class MainActivity extends AppCompatActivity {
 
-    private static int SIGN_IN_REQUEST_CODE = 1;
     private FirebaseListAdapter<ChatMessage> adapter;
-    RelativeLayout activity_main;
-    FloatingActionButton fab;
 
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        if(item.getItemId() == R.id.menu_sign_out)
-        {
-
-            AuthUI.getInstance().signOut(this).addOnCompleteListener(new OnCompleteListener<Void>() {
-
-                @Override
-                public void OnComplete(@NonNull Task<Void> task){
-
-                    Snackbar.make(activity_main,"Signed out.", Snackbar.LENGTH_SHORT.show();
-                            finish();
-
-                }
-            });
-
-        return true;
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.main_menu,menu);
-        return true;
-
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        if(requestCode == SIGN_IN_REQUEST_CODE)
-
-        {
-
-            if(resultCode == RESULT_OK)
-            {
-
-                Snackbar.make(activity_main,"You've logged in!", Snackbar.LENGTH_SHORT.show();
-                displayChatMessage();
-            }
-
-            else{
-                (activity_main,"Unable to login, please try again later.", Snackbar.LENGTH_SHORT.show();
-                finish();
-            }
-        }
-    }
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
+        protected void onCreate (Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+            FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab); //Action button
 
-        activity_main = (RelativeLayout)findViewById(R.id.activity_main);
-        fab = (FloatingActionButton)findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
+        fab.setOnClickListener(new View.OnClickListener()
+
+        {
 
             @Override
 
-            public void OnClick(View view){
+            public void onClick(View view) {
+                EditText input = (EditText) findViewById(R.id.input);
+//Action button with onClick so the user can basically click it and it will give an input
 
-                EditText input = (EditText)findViewById(R.id.input)
-                        FirebaseDatabase.getInstance().getReference().push().setValue(new ChatMessage(input.getText.toString(),
-
-                                FirebaseAuth.getInstance().getCurrentUser().getEmail()));
+                FirebaseDatabase.getInstance().getReference().push().setValue(new ChatMessage(input.getText().toString(), FirebaseAuth.getInstance().getCurrentUser().getDisplayName()));
 
                 input.setText("");
             }
+
+
+            private void displayChatMessages() {
+
+                ListView listOfMessages = (ListView) findViewById(R.id.list_of_messages);
+
+                adapter = new FirebaseListAdapter<ChatMessage>(this, ChatMessage.class, R.layout.message, FirebaseDatabase.getInstance().getReference()) {
+
+                    @Override
+
+                    protected void populateView(View v, ChatMessage model, int position) {
+
+                        TextView messageText = (TextView) v.findViewById(R.id.message_text);
+                        TextView messageUser = (TextView) v.findViewById(R.id.message_user);
+                        TextView messageTime = (TextView) v.findViewById(R.id.message_time);
+
+
+                        messageText.setText(model.getMessageText());
+
+                        messageUser.setText(model.getMessageUser());
+
+
+                        messageTime.setText(DateFormat.format("dd-MM-yyyy (HH:mm:ss)", model.getMessageTime())); //Date for the text message, shows timestamp
+                    }
+                };
+
+                listOfMessages.setAdapter(adapter);
+
+    }
+
         });
+};
 
-
-
-        if(FirebaseAuth.getInstance().getCurrentUser() == null)
-        {
-            startActivityForResult(AuthUI.getInstance[].createSignInIntentBuilder().build(),SIGN_IN_REQUEST_CODE);
-
-
-        }
-        else
-
-        {
-        Snackbar.make(activity_main,"Welcome " +FirebaseAuth.getInstance().getCurrentUser().getEmail(), Snackbar.LENGTH_SHORT.show();
-
-            displayChatMessage();
-
-        }
-
-
-    }
-
-    }
-
-    private void displayChatMessage(){
-
-        ListView listOfMessage = (ListView)findViewById(R.id.list_of_message);
-
-        adapter = new FirebaseListAdapter<ChatMessage>(this,ChatMessage.class,R.layout.list_item,FirebaseDatabase.getInstance().getReference())
-
-        {
-            @Override
-            protected void populateView(View v, ChatMessage model, int position) {
-
-                TextView messageText,messageUser,messageTime;
-                messageText = (TextView)v.findViewById(R.id.message_text);
-                messageUser = (TextView)v.findViewById(R.id.message_user);
-                messageTime = (TextView)v.findViewById(R.id.message_time);
-
-
-
-                messageText.setText(model.getMessageText());
-                messageUser.setText(model.getMessageUser());
-                messageTime.setText(DateFormat.format("dd-MM-yyyy (HH:mm:ss)",model.getMessageTime()));
-
-            }
-        };
-
-
-        listOfMessage.setAdapter(adapter);
-    }
-
-
-    }
-
+}
