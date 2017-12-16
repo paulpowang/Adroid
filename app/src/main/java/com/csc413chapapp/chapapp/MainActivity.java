@@ -26,13 +26,15 @@ import com.google.firebase.database.FirebaseDatabase;
 
 public class MainActivity extends AppCompatActivity {
 
+    private FirebaseAuth mAuth;
     private FirebaseListAdapter<ChatMessage> adapter;
-
 
     @Override
         protected void onCreate (Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        mAuth = FirebaseAuth.getInstance();
 
             FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab); //Action button
 
@@ -44,6 +46,7 @@ public class MainActivity extends AppCompatActivity {
 
             public void onClick(View view) {
                 EditText input = (EditText) findViewById(R.id.input);
+
 //Action button with onClick so the user can basically click it and it will give an input
 
                 FirebaseDatabase.getInstance().getReference().push().setValue(new ChatMessage(input.getText().toString(), FirebaseAuth.getInstance().getCurrentUser().getDisplayName()));
@@ -54,11 +57,9 @@ public class MainActivity extends AppCompatActivity {
 
             private void displayChatMessages() {
 
-                ListView listOfMessages = (ListView) findViewById(R.id.list_of_messages);
+                ListView listOfMessages = (ListView) findViewById(R.id.list_of_message);
 
                 adapter = new FirebaseListAdapter<ChatMessage>(this, ChatMessage.class, R.layout.message, FirebaseDatabase.getInstance().getReference()) {
-
-                    @Override
 
                     protected void populateView(View v, ChatMessage model, int position) {
 
