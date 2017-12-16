@@ -46,6 +46,19 @@
         android:layout_height="wrap_content"
         android:text="Display Password" />
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Username:" />
+
+    <EditText
+        android:id="@+id/reg_username"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="Username"
+        android:inputType="textPersonName" />
+
     <Button
         android:id="@+id/reg_btn_submit"
         android:layout_width="match_parent"
