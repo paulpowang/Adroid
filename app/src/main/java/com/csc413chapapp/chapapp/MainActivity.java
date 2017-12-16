@@ -10,23 +10,27 @@ import android.widget.TextView;
 public class MainActivity extends AppCompatActivity {
 
 
-    Button start;
-    TextView text;
+    private Button Blue;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        start = (Button)findViewById(R.id.start);
-       // text = (TextView)findViewById(R.id.old)
-         start.setOnClickListener(new View.OnClickListener() {
-             @Override
-             public void onClick(View v) {
-                 Intent neo = new Intent(MainActivity.this, button2.class);
-            startActivity(neo);
-             }
-         });
 
+
+        Blue = (Button) findViewById(R.id.ContactsBtn);
+
+        //OnClick Listener
+        Blue.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, Contacts.class);
+                startActivity(intent);
+            }
+        });
     }
+
+
 }
