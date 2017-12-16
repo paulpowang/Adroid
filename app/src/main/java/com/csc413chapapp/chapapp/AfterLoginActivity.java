@@ -1,0 +1,16 @@
+package com.csc413chapapp.chapapp;
+
+import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+
+/**
+ * Created by Paul on 12/5/2017.
+ */
+
+public class AfterLoginActivity extends AppCompatActivity{
+    @Override
+    protected void onCreate(Bundle savedInstanceState){
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.after_login);
+    }
+}
