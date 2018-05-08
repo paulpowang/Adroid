@@ -1,6 +1,8 @@
 # README #
 
-This README file explains how this ChatApp works
+### About ###
+This chat app only implements the UI interface and without the messangers. 
+The database is Google Firebase, and the json file is not included.
 
 ### 1. First Page ###
 
